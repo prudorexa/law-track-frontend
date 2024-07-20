@@ -142,7 +142,7 @@ const Schedule = () => {
 
     return (
         <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold mb-6">Schedules</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-center">Schedules</h2>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();

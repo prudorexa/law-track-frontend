@@ -8,7 +8,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/api/', // Base URL for API endpoints
+  baseURL: 'http://127.0.0.1:8000/api/',
 });
 
 const Login = () => {
@@ -47,10 +47,10 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await client.post('http://127.0.0.1:8000/api/api/login/', { email, password });
+      const response = await client.post('/api/login/', { email, password });
       if (response.status === 200) {
         setMessage('Login successful!');
-        navigate('/About'); // Navigate to desired page after successful login
+        navigate('/Home'); // Navigate to desired page after successful login
       } else {
         setMessage('Login failed. Please check your credentials.');
       }
@@ -59,7 +59,7 @@ const Login = () => {
       setMessage('Login failed. Please check your credentials.');
     }
   };
-  
+
   const handleSignUp = async () => {
     try {
       const response = await client.post('/api/users/', { username: name, email, password, role });
@@ -74,7 +74,7 @@ const Login = () => {
       setMessage('Registration failed. Please check your details.');
     }
   };
-  
+
   const handlePasswordReset = async () => {
     try {
       const response = await client.post('/api/reset-password/', { email: resetEmail, newPassword, confirmPassword });
@@ -88,12 +88,12 @@ const Login = () => {
       setMessage('Password reset request failed.');
     }
   };
-  
+
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-      <div className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md">
-        <div className="text-3xl font-bold mb-4 text-center text-gray-800">{action}</div>
-        <div className="mb-8">
+    <div className="min-h-screen bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center px-4 py-6 sm:px-6 sm:py-8">
+      <div className="bg-white shadow-lg rounded-lg px-6 pt-6 pb-8 mb-4 w-full max-w-md sm:px-8 sm:pt-8 sm:pb-10">
+        <div className="text-2xl font-bold mb-4 text-center text-gray-800 sm:text-3xl">{action}</div>
+        <div className="mb-6">
           <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
         </div>
         {message && <div className="text-red-500 mb-4 text-center">{message}</div>}
@@ -109,7 +109,7 @@ const Login = () => {
                 placeholder="Enter your email"
                 value={resetEmail}
                 onChange={(e) => setResetEmail(e.target.value)}
-                className="input-field focus:ring-blue-500 focus:border-blue-500"
+                className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                 required
               />
             </div>
@@ -123,7 +123,7 @@ const Login = () => {
                 placeholder="Enter new password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="input-field focus:ring-blue-500 focus:border-blue-500"
+                className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                 required
               />
             </div>
@@ -137,7 +137,7 @@ const Login = () => {
                 placeholder="Confirm new password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="input-field focus:ring-blue-500 focus:border-blue-500"
+                className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                 required
               />
             </div>
@@ -165,7 +165,7 @@ const Login = () => {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="input-field focus:ring-blue-500 focus:border-blue-500"
+                    className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                     required
                   />
                 </div>
@@ -179,7 +179,7 @@ const Login = () => {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="input-field focus:ring-blue-500 focus:border-blue-500"
+                    className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                     required
                   />
                 </div>
@@ -196,7 +196,7 @@ const Login = () => {
                     placeholder="Enter your username"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="input-field focus:ring-blue-500 focus:border-blue-500"
+                    className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                     required
                   />
                 </div>
@@ -210,7 +210,7 @@ const Login = () => {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="input-field focus:ring-blue-500 focus:border-blue-500"
+                    className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                     required
                   />
                 </div>
@@ -224,7 +224,7 @@ const Login = () => {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="input-field focus:ring-blue-500 focus:border-blue-500"
+                    className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                     required
                   />
                 </div>
@@ -236,7 +236,7 @@ const Login = () => {
                     id="role"
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="input-field focus:ring-blue-500 focus:border-blue-500"
+                    className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
                     required
                   >
                     <option value="" disabled>Select Role</option>
@@ -258,25 +258,34 @@ const Login = () => {
             </div>
           </form>
         )}
-        {action !== 'Forgot Password' && (
-          <div className="forgot-password text-center mt-4 cursor-pointer" onClick={() => setAction('Forgot Password')}>
-            Forgot Password? <span className="text-blue-500">Click Here!</span>
+        <div className="flex items-center justify-center mt-4">
+          <button
+            className="text-blue-500 hover:underline"
+            onClick={() => setAction(action === 'Forgot Password' ? 'Login' : 'Forgot Password')}
+          >
+            {action === 'Forgot Password' ? 'Back to Login' : 'Forgot Password?'}
+          </button>
+        </div>
+        {action === 'Login' && (
+          <div className="flex items-center justify-center mt-4">
+            <button
+              className="text-blue-500 hover:underline"
+              onClick={() => setAction('Sign Up')}
+            >
+              Don't have an account? Sign Up
+            </button>
           </div>
         )}
-        <div className="flex justify-center mt-4 space-x-4">
-          <div
-            className={`cursor-pointer ${action === 'Login' ? 'text-blue-500' : 'text-gray-600'}`}
-            onClick={() => setAction('Login')}
-          >
-            Login
+        {action === 'Sign Up' && (
+          <div className="flex items-center justify-center mt-4">
+            <button
+              className="text-blue-500 hover:underline"
+              onClick={() => setAction('Login')}
+            >
+              Already have an account? Login
+            </button>
           </div>
-          <div
-            className={`cursor-pointer ${action === 'Sign Up' ? 'text-blue-500' : 'text-gray-600'}`}
-            onClick={() => setAction('Sign Up')}
-          >
-            Sign Up
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

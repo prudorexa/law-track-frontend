@@ -77,7 +77,7 @@ const CaseForm = ({ onSubmit, editCase, lawyers, loading }) => {
         value={form.title}
         onChange={handleInputChange}
         required
-        className="w-full px-4 py-2 border rounded-md"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <textarea
         name="description"
@@ -85,14 +85,14 @@ const CaseForm = ({ onSubmit, editCase, lawyers, loading }) => {
         value={form.description}
         onChange={handleInputChange}
         required
-        className="w-full px-4 py-2 border rounded-md"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <select
         name="status"
         value={form.status}
         onChange={handleInputChange}
         required
-        className="w-full px-4 py-2 border rounded-md"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <option value="open">Open</option>
         <option value="in_progress">In Progress</option>
@@ -104,7 +104,7 @@ const CaseForm = ({ onSubmit, editCase, lawyers, loading }) => {
         value={form.assigned_lawyers}
         onChange={handleLawyersChange}
         required
-        className="w-full px-4 py-2 border rounded-md"
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         {lawyers.map(lawyer => (
           <option key={lawyer.id} value={lawyer.id}>
@@ -112,25 +112,26 @@ const CaseForm = ({ onSubmit, editCase, lawyers, loading }) => {
           </option>
         ))}
       </select>
-      <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md">
+      <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
         {loading ? 'Processing...' : 'Save'}
       </button>
     </form>
   );
 };
 
-const CaseList = ({ cases, onEdit, onDelete }) => {
+const CaseList = ({ cases, onEdit, onDelete, onViewDetails }) => {
   return (
     <ul className="space-y-4">
       {cases.map(caseItem => (
-        <li key={caseItem.id} className="p-4 border rounded-md shadow-sm">
-          <h2 className="text-xl font-semibold">{caseItem.title}</h2>
-          <p className="text-gray-700">{caseItem.description}</p>
-          <p className="text-gray-600">Status: {caseItem.status}</p>
-          <p className="text-gray-600">Assigned Lawyers: {caseItem.assigned_lawyers.map(lawyer => lawyer.name).join(', ')}</p>
-          <div className="space-x-2">
-            <button onClick={() => onEdit(caseItem)} className="px-4 py-2 bg-yellow-500 text-white rounded-md">Edit</button>
-            <button onClick={() => onDelete(caseItem.id)} className="px-4 py-2 bg-red-500 text-white rounded-md">Delete</button>
+        <li key={caseItem.id} className="p-4 border border-gray-300 bg-white rounded-md shadow-sm">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">{caseItem.title}</h2>
+          <p className="text-gray-700 mb-2">{caseItem.description}</p>
+          <p className="text-gray-600 mb-2">Status: {caseItem.status}</p>
+          <p className="text-gray-600 mb-4">Assigned Lawyers: {caseItem.assigned_lawyers.map(lawyer => lawyer.name).join(', ')}</p>
+          <div className="flex space-x-2">
+            <button onClick={() => onEdit(caseItem)} className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500">Edit</button>
+            <button onClick={() => onDelete(caseItem.id)} className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Delete</button>
+            <button onClick={() => onViewDetails(caseItem.id)} className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">View Details</button>
           </div>
         </li>
       ))}
@@ -144,6 +145,7 @@ const CaseManagement = () => {
   const [editCase, setEditCase] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleFormSubmit = async (form) => {
     setLoading(true);
@@ -179,15 +181,13 @@ const CaseManagement = () => {
   };
 
   const handleViewDetails = (id) => {
-    // Navigate to case details page
-    // Example using react-router-dom
     navigate(`/cases/${id}`);
   };
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Case Management</h1>
-      {message && <div className="message">{message}</div>}
+      <h1 className="text-3xl font-bold mb-6">Case Management</h1>
+      {message && <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 p-4 rounded-md mb-4">{message}</div>}
       <CaseForm onSubmit={handleFormSubmit} editCase={editCase} lawyers={lawyers} loading={loading} />
       <CaseList cases={cases} onEdit={handleEdit} onDelete={handleDelete} onViewDetails={handleViewDetails} />
     </div>

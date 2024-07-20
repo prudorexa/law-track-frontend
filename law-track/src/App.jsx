@@ -7,11 +7,7 @@ import Login from "./components/LoginForm";
 import MessageNotification from "./components/MessageNotification";
 import Services from "./components/Services";
 import ContactUs from './components/ContactUs';
-// import Register from "./components/RegistrationForm";
-import UserDashboard from './components/UserDashboard';
-// import AdminDashboard from './components/AdminDashboard';
-import LawyerDashboard from './components/LawyerDashboard';
-import ClientDashboard from './components/ClientDashboard';
+import Dashboard from './components/Dashboard';
 import Cases from "./components/Cases"; 
 import Schedule from './components/Schedule'; 
 import Communication from './components/Communication';
@@ -19,19 +15,6 @@ import Documents from './components/Documents';
 import Billing from './components/Billing';
 import CaseManagement from './components/CaseManagement';
 import Footer from './components/Footer';
-
-const Dashboard = ({ userRole }) => {
-  switch (userRole) {
-    case 'admin':
-      return <AdminDashboard />;
-    case 'lawyer':
-      return <LawyerDashboard />;
-    case 'client':
-      return <ClientDashboard />;
-    default:
-      return <UserDashboard />;
-  }
-};
 
 const App = () => {
   const [userRole, setUserRole] = useState('');
@@ -50,10 +33,8 @@ const App = () => {
     <Router>
       <Navbar userRole={userRole} setUserRole={setUserRole} />
       <Routes>
+        <Route path='/' element={<Login setUserRole={setUserRole} />} />
         <Route path='/dashboard' element={<Dashboard userRole={userRole} />} />
-        {/* <Route path='/admindashboard' element={<AdminDashboard />} /> */}
-        <Route path='/lawyerdashboard' element={<LawyerDashboard />} />
-        <Route path='/clientdashboard' element={<ClientDashboard />} />
         <Route path='/home' element={<Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/services' element={<Services />} />

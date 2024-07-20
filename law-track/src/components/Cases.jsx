@@ -9,11 +9,10 @@ const Cases = () => {
   const fetchCases = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/cases/');
-      console.log('Cases data:', response.data); // Log the response data
       setCases(response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching cases:', error); // Log errors for debugging
+      console.error('Error fetching cases:', error);
       setLoading(false);
     }
   };
@@ -30,31 +29,40 @@ const Cases = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="loader"></div> {/* Optional: Add a spinner for loading state */}
+      </div>
+    );
   }
 
   return (
-    <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 bg-white rounded-full text-gray-800 text-base lg:text-lg'>
-      <h1>Cases</h1>
-      {cases.map((caseItem) => (
-        <div key={caseItem.id} className='border p-3 bg-neutral-400 mx-9 my-8 rounded-lg font-bold'>
-          <p className='font-bold text-4xl text-black-500'>Case Number: {caseItem.case_number}</p>
-          <p className='font-bold text-2xl text-black-500'>Case Name: {caseItem.case_name}</p>
-          <p>
-            {expandedCases[caseItem.id] ? caseItem.case_description : `${caseItem.case_description.slice(0, 100)}...`}
-          </p>
-          <button
-            onClick={() => toggleReadMore(caseItem.id)}
-            className='text-blue-500 underline'
+    <div className="p-4 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold text-center mb-8">Cases</h1>
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6">
+        {cases.map((caseItem) => (
+          <div
+            key={caseItem.id}
+            className="border border-gray-300 bg-white p-6 rounded-lg shadow-md"
           >
-            {expandedCases[caseItem.id] ? 'Read Less' : 'Read More'}
-          </button>
-          <p className='font-bold text-xl text-blue-4900'>Assigned Lawyer ID: {caseItem.assigned_lawyer}</p>
-          <p className='font-bold text-xl text-blue-4900'>Clients: {caseItem.clients.join(', ')}</p>
-          <p className='font-bold text-xl text-blue-4900'>Created At: {caseItem.created_at}</p>
-          <p className='font-bold text-xl text-blue-4900'>Updated At: {caseItem.updated_at}</p>
-        </div>
-      ))}
+            <p className="font-bold text-xl text-gray-800 mb-2">Case Number: {caseItem.case_number}</p>
+            <p className="font-bold text-lg text-gray-700 mb-2">Case Name: {caseItem.case_name}</p>
+            <p className="text-gray-600 mb-4">
+              {expandedCases[caseItem.id] ? caseItem.case_description : `${caseItem.case_description.slice(0, 100)}...`}
+            </p>
+            <button
+              onClick={() => toggleReadMore(caseItem.id)}
+              className="text-blue-500 hover:underline mb-4"
+            >
+              {expandedCases[caseItem.id] ? 'Read Less' : 'Read More'}
+            </button>
+            <p className="font-semibold text-gray-700">Assigned Lawyer ID: {caseItem.assigned_lawyer}</p>
+            <p className="font-semibold text-gray-700">Clients: {caseItem.clients.join(', ')}</p>
+            <p className="font-semibold text-gray-700">Created At: {new Date(caseItem.created_at).toLocaleDateString()}</p>
+            <p className="font-semibold text-gray-700">Updated At: {new Date(caseItem.updated_at).toLocaleDateString()}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

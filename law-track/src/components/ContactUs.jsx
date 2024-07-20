@@ -45,17 +45,16 @@ const ContactUs = () => {
 
   return (
     <div className="min-h-screen p-6 flex flex-col md:flex-row">
-
       {/* Left Column - Image */}
-      <div className='w-full md:w-1/2 mb-6 md:mb-0'>
-        <img className='w-full h-auto rounded-lg' src={lawFirmImage} alt="Law Firm" />
+      <div className="w-full md:w-1/2 mb-6 md:mb-0 flex items-center justify-center">
+        <img className="w-full h-auto rounded-lg shadow-md" src={lawFirmImage} alt="Law Firm" />
       </div>
 
       {/* Right Column - Form */}
-      <div className='w-full md:w-1/2'>
-        <section className="contact-us-form max-w-lg mx-auto md:mx-0 text-center bg-white bg-opacity-75 shadow-xl p-8 rounded-lg">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800">Contact Us</h1>
-          <p className="text-lg md:text-xl mb-8 text-gray-700">
+      <div className="w-full md:w-1/2 flex items-center justify-center">
+        <section className="contact-us-form max-w-lg w-full text-center bg-white bg-opacity-75 shadow-xl p-8 rounded-lg">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Contact Us</h1>
+          <p className="text-base md:text-lg mb-8 text-gray-700">
             Have any questions or need a consultation? Fill out the form below to get in touch with us.
           </p>
           {!submitted ? (
@@ -120,7 +119,6 @@ const ContactUs = () => {
           )}
         </section>
       </div>
-
     </div>
   );
 };
