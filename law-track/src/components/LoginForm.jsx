@@ -47,7 +47,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await client.post('/api/login/', { email, password });
+      const response = await client.post('/login/', { email, password });
       if (response.status === 200) {
         setMessage('Login successful!');
         navigate('/Home'); // Navigate to desired page after successful login
@@ -62,7 +62,7 @@ const Login = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await client.post('/api/users/', { username: name, email, password, role });
+      const response = await client.post('/users/', { username: name, email, password, role });
       if (response.status === 201) {
         setMessage('Registration successful!');
         setAction('Login'); // Automatically switch to login after successful signup

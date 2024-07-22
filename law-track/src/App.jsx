@@ -13,6 +13,7 @@ import Schedule from './components/Schedule';
 import Communication from './components/Communication';
 import Documents from './components/Documents';
 import Billing from './components/Billing';
+import Payment from './components/payment';
 import CaseManagement from './components/CaseManagement';
 import Footer from './components/Footer';
 
@@ -36,6 +37,7 @@ const App = () => {
         <Route path='/' element={<Login setUserRole={setUserRole} />} />
         <Route path='/dashboard' element={<Dashboard userRole={userRole} />} />
         <Route path='/home' element={<Home />} />
+        <Route path='/payment' element={<Payment />} />
         <Route path='/about' element={<About />} />
         <Route path='/services' element={<Services />} />
         <Route path='/contact' element={<ContactUs />} />

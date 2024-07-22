@@ -9,11 +9,11 @@ const Services = () => {
   const fetchServices = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/services/');
-      console.log('Services data:', response.data); // Log the response data
+      console.log('Services data:', response.data); 
       setServices(response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching details:', error); // Log errors for debugging
+      console.error('Error fetching details:', error); 
       setLoading(false);
     }
   };
