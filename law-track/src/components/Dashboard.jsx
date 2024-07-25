@@ -147,12 +147,12 @@ const Dashboard = () => {
 
     // Fetch data for admin
     if (userRole === 'admin') {
-      fetchData('http://127.0.0.1:8000/api/users/', setUsers);
+      fetchData('http://127.0.0.1:8000/api/api/users/', setUsers);
       fetchData('http://127.0.0.1:8000/api/cases/', setCases);
       fetchData('http://127.0.0.1:8000/api/documents/', setDocuments);
       fetchData('http://127.0.0.1:8000/api/messages/', setMessages);
       fetchData('http://127.0.0.1:8000/api/schedule/', setSchedules);
-      fetchData('http://127.0.0.1:8000/api/contacts/', setContacts);
+      fetchData('http://127.0.0.1:8000/api/contact/', setContacts);
       fetchData('http://127.0.0.1:8000/api/billings/', setBillings);
     }
 
@@ -208,11 +208,13 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen">
       <Navbar
-        items={userRole === 'admin' ? adminSections : userRole === 'lawyer' ? lawyerSections : []}
+        items={userRole === 'admin' ? adminSections : lawyerSections}
         activeItem={activeSection}
         onSelectItem={setActiveSection}
       />
-      <div className="flex-1 p-6">{renderSection()}</div>
+      <div className="flex-1 p-6 overflow-auto">
+        {renderSection()}
+      </div>
     </div>
   );
 };
