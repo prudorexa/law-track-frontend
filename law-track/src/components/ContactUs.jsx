@@ -7,6 +7,7 @@ const ContactUs = () => {
     name: '',
     email: '',
     message: '',
+    assigned_lawyers_ids: [], // Initialize assigned_lawyers_ids as an empty array
   });
   const [submitting, setSubmitting] = useState(false); // Track submission status
   const [submissionError, setSubmissionError] = useState(null); // Track submission errors
@@ -20,18 +21,27 @@ const ContactUs = () => {
     });
   };
 
+  const handleLawyersChange = (e) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      assigned_lawyers_ids: value.split(',').map(id => id.trim()), // Convert comma-separated IDs to an array
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true); // Start submission process
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/contact-us/', formData); // Use formData here
+      const response = await axios.post('http://127.0.0.1:8000/api/contact/', formData); // Use formData here
       console.log('Form data submitted:', response.data);
       // Reset form after successful submission
       setFormData({
         name: '',
         email: '',
         message: '',
+        assigned_lawyers_ids: [],
       });
       setSubmissionError(null);
       setSubmitted(true); // Set submitted to true
@@ -100,6 +110,20 @@ const ContactUs = () => {
                   className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   required
                 ></textarea>
+              </div>
+              <div className="mb-4">
+                <label htmlFor="assigned_lawyers_ids" className="block text-left font-medium text-gray-700">
+                  Assigned Lawyer IDs (comma-separated)
+                </label>
+                <input
+                  type="text"
+                  id="assigned_lawyers_ids"
+                  name="assigned_lawyers_ids"
+                  value={formData.assigned_lawyers_ids.join(', ')}
+                  onChange={handleLawyersChange}
+                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  required
+                />
               </div>
               <button
                 type="submit"

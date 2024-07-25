@@ -52,11 +52,13 @@ const Communication = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/messages/', newMessage);
+      const sentMessage = response.data;
+
       setNewMessage({ receiver: '', subject: '', content: '' });
-      fetchMessages(); // Fetch messages again after sending new message
+      setMessages((prevMessages) => [sentMessage, ...prevMessages]); // Add new message to the top of the list
       fetchNotifications(); // Fetch notifications again after sending new message
       setSnackbarOpen(true);
-      console.log('Message sent:', response.data);
+      console.log('Message sent:', sentMessage);
     } catch (error) {
       console.error('Error sending message:', error);
       setError('Failed to send message. Please try again.');

@@ -9,29 +9,39 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/',
+  baseURL: 'http://127.0.0.1:8000/api/billings/',
 });
 
 const Billing = ({ onSuccess }) => {
-  const [invoiceNumber, setInvoiceNumber] = useState('');
-  const [amount, setAmount] = useState('');
-  const [issueDate, setIssueDate] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [formData, setFormData] = useState({
+    invoiceNumber: '',
+    amount: '',
+    issueDate: '',
+    dueDate: '',
+  });
   const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
 
     try {
-      const response = await client.post('billings/', {
-        invoice_number: invoiceNumber,
-        amount: amount,
-        issue_date: issueDate,
-        due_date: dueDate,
+      const response = await client.post('http://127.0.0.1:8000/api/billings/', {
+        invoice_number: formData.invoiceNumber,
+        amount: formData.amount,
+        issue_date: formData.issueDate,
+        due_date: formData.dueDate,
         case: 1, // Replace with the actual case ID you want to associate with
       });
-      if (onSuccess) onSuccess(); // Optional: Callback to handle success, like clearing form or updating data
+      if (onSuccess) onSuccess(response.data); // Pass the new billing data to onSuccess
       console.log('Billing submitted:', response.data);
     } catch (error) {
       console.error('Error submitting billing:', error);
@@ -58,8 +68,9 @@ const Billing = ({ onSuccess }) => {
                 fullWidth
                 required
                 label="Invoice Number"
-                value={invoiceNumber}
-                onChange={(e) => setInvoiceNumber(e.target.value)}
+                name="invoiceNumber"
+                value={formData.invoiceNumber}
+                onChange={handleChange}
                 sx={{ marginBottom: 2 }}
               />
               <TextField
@@ -67,8 +78,9 @@ const Billing = ({ onSuccess }) => {
                 required
                 type="number"
                 label="Amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                name="amount"
+                value={formData.amount}
+                onChange={handleChange}
                 sx={{ marginBottom: 2 }}
               />
               <TextField
@@ -76,8 +88,9 @@ const Billing = ({ onSuccess }) => {
                 required
                 type="date"
                 label="Issue Date"
-                value={issueDate}
-                onChange={(e) => setIssueDate(e.target.value)}
+                name="issueDate"
+                value={formData.issueDate}
+                onChange={handleChange}
                 sx={{ marginBottom: 2 }}
                 InputLabelProps={{
                   shrink: true,
@@ -88,14 +101,19 @@ const Billing = ({ onSuccess }) => {
                 required
                 type="date"
                 label="Due Date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
+                name="dueDate"
+                value={formData.dueDate}
+                onChange={handleChange}
                 sx={{ marginBottom: 2 }}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-              {error && <Typography variant="body2" color="error" sx={{ marginBottom: 2 }}>{error}</Typography>}
+              {error && (
+                <Typography variant="body2" color="error" sx={{ marginBottom: 2 }}>
+                  {error}
+                </Typography>
+              )}
               <Button type="submit" variant="contained" color="primary">
                 Submit
               </Button>
