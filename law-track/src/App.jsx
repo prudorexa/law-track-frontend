@@ -9,10 +9,13 @@ import Services from "./components/Services";
 import ContactUs from './components/ContactUs';
 import Dashboard from './components/Dashboard';
 import Cases from "./components/Cases"; 
+import Support from "./components/Support";
+import TermsCondition from "./components/TermsCondition";
 import Schedule from './components/Schedule'; 
 import Communication from './components/Communication';
 import Documents from './components/Documents';
 import Billing from './components/Billing';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import Payment from './components/payment';
 import CaseManagement from './components/CaseManagement';
 import Footer from './components/Footer';
@@ -47,6 +50,9 @@ const App = () => {
         <Route path='/schedule' element={<Schedule />} />
         <Route path='/documents' element={<Documents />} />
         <Route path='/billing' element={<Billing />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/support' element={<Support />} />
+        <Route path='/terms-condition' element={<TermsCondition />} />
         <Route path='/casemanagement' element={<CaseManagement />} />
         <Route path='/communication' element={<Communication />} />
       </Routes>
