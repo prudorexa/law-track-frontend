@@ -8,7 +8,7 @@ const Services = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/services/');
+      const response = await axios.get('https://law-track-backend-1.onrender.com/api/services/');
       console.log('Services data:', response.data); 
       setServices(response.data);
       setLoading(false);

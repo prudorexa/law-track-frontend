@@ -60,7 +60,7 @@ const UserList = ({ users }) => {
 const AdminDashboard = ({
   users,
   cases,
-  documents,
+  // documents,
   messages,
   schedules,
   contacts,
@@ -70,7 +70,7 @@ const AdminDashboard = ({
     <div>
       <UserList users={users} />
       <Section title="Manage Cases" data={cases} columns={['ID', 'Title', 'Assigned Lawyer', 'Status']} />
-      <Section title="Manage Documents" data={documents} columns={['ID', 'Name', 'Uploaded At', 'Case ID']} />
+      {/* <Section title="Manage Documents" data={documents} columns={['ID', 'Name', 'Uploaded At', 'Case ID']} /> */}
       <Section title="Client Messages" data={messages} columns={['ID', 'Content', 'Client ID']} />
       <Section title="Manage Schedule" data={schedules} columns={['ID', 'Event', 'Date']} />
       <Section title="Manage Contacts" data={contacts} columns={['ID', 'Name', 'Email', 'Message']} />
@@ -130,14 +130,14 @@ const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('Users');
   const [users, setUsers] = useState([]);
   const [cases, setCases] = useState([]);
-  const [documents, setDocuments] = useState([]);
+  // const [documents, setDocuments] = useState([]);
   const [messages, setMessages] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [billings, setBillings] = useState([]);
   const [profile, setProfile] = useState({});
 
-  const adminSections = ['Users', 'Cases', 'Documents', 'Messages', 'Schedule', 'Contacts', 'Billings'];
+  const adminSections = ['Users', 'Cases', 'Messages', 'Schedule', 'Contacts', 'Billings'];
   const lawyerSections = ['Assigned Cases', 'Schedule', 'Messages'];
 
   useEffect(() => {
@@ -147,25 +147,25 @@ const Dashboard = () => {
 
     // Fetch data for admin
     if (userRole === 'admin') {
-      fetchData('http://127.0.0.1:8000/api/api/users/', setUsers);
-      fetchData('http://127.0.0.1:8000/api/cases/', setCases);
-      fetchData('http://127.0.0.1:8000/api/documents/', setDocuments);
-      fetchData('http://127.0.0.1:8000/api/messages/', setMessages);
-      fetchData('http://127.0.0.1:8000/api/schedule/', setSchedules);
-      fetchData('http://127.0.0.1:8000/api/contact/', setContacts);
-      fetchData('http://127.0.0.1:8000/api/billings/', setBillings);
+      fetchData('https://law-track-backend-1.onrender.com/api/api/users/', setUsers);
+      fetchData('https://law-track-backend-1.onrender.com/api/cases/', setCases);
+      // fetchData('http://127.0.0.1:8000/api/documents/', setDocuments);
+      fetchData('https://law-track-backend-1.onrender.com/api/messages/', setMessages);
+      fetchData('https://law-track-backend-1.onrender.com/api/schedule/', setSchedules);
+      fetchData('https://law-track-backend-1.onrender.com/api/contact/', setContacts);
+      fetchData('https://law-track-backend-1.onrender.com/api/billings/', setBillings);
     }
 
     // Fetch data for lawyer
     if (userRole === 'lawyer') {
       fetchData('http://127.0.0.1:8000/api/assigned_cases/', setCases);
-      fetchData('http://127.0.0.1:8000/api/schedule/', setSchedules);
-      fetchData('http://127.0.0.1:8000/api/messages/', setMessages);
+      fetchData('https://law-track-backend-1.onrender.com/apischedule/', setSchedules);
+      fetchData('https://law-track-backend-1.onrender.com/apimessages/', setMessages);
     }
 
     // Fetch data for client
     if (userRole === 'client') {
-      fetchData('http://127.0.0.1:8000/api/profile/', setProfile);
+      fetchData('https://law-track-backend-1.onrender.com/apiprofile/', setProfile);
     }
   }, [userRole]);
 
@@ -176,8 +176,8 @@ const Dashboard = () => {
           return <UserList users={users} />;
         case 'Cases':
           return <Section title="Manage Cases" data={cases} columns={['ID', 'Title', 'Assigned Lawyer', 'Status']} />;
-        case 'Documents':
-          return <Section title="Manage Documents" data={documents} columns={['ID', 'Name', 'Uploaded At', 'Case ID']} />;
+        // case 'Documents':
+        //   return <Section title="Manage Documents" data={documents} columns={['ID', 'Name', 'Uploaded At', 'Case ID']} />;
         case 'Messages':
           return <Section title="Client Messages" data={messages} columns={['ID', 'Content', 'Client ID']} />;
         case 'Schedule':

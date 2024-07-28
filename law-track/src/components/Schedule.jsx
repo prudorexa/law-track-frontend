@@ -20,7 +20,7 @@ const Schedule = () => {
 
     const fetchSchedules = async () => {
         try {
-            const response = await axios.get("/api/api/schedules/");
+            const response = await axios.get("https://law-track-backend-1.onrender.com/apischedules/");
             console.log("Fetched schedules:", response.data);
             if (Array.isArray(response.data)) {
                 setSchedules(response.data);
@@ -34,7 +34,7 @@ const Schedule = () => {
 
     const fetchLawyers = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/lawyers/");
+            const response = await axios.get("https://law-track-backend-1.onrender.com/apilawyers/");
             setLawyers(response.data);
         } catch (error) {
             console.error("Error fetching lawyers:", error);
@@ -43,7 +43,7 @@ const Schedule = () => {
 
     const fetchCases = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/cases/");
+            const response = await axios.get("https://law-track-backend-1.onrender.com/apicases/");
             setCases(response.data);
         } catch (error) {
             console.error("Error fetching cases:", error);
@@ -61,9 +61,9 @@ const Schedule = () => {
 
         try {
             if (editingScheduleId) {
-                await axios.put(`/api/schedules/${editingScheduleId}/`, scheduleData);
+                await axios.put(`https://law-track-backend-1.onrender.com/apischedules/${editingScheduleId}/`, scheduleData);
             } else {
-                await axios.post("/api/schedules/", scheduleData);
+                await axios.post("https://law-track-backend-1.onrender.com/apischedules/", scheduleData);
             }
             fetchSchedules();
             resetForm();
@@ -83,7 +83,7 @@ const Schedule = () => {
 
     const handleDelete = async (scheduleId) => {
         try {
-            await axios.delete(`/api/schedules/${scheduleId}/`);
+            await axios.delete(`https://law-track-backend-1.onrender.com/apischedules/${scheduleId}/`);
             fetchSchedules();
         } catch (error) {
             console.error("Error deleting schedule:", error);

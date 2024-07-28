@@ -40,7 +40,7 @@ const Communication = () => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/notifications/');
+      const response = await axios.get('https://law-track-backend-1.onrender.com/apinotifications/');
       setNotifications(response.data); // Assuming response.data is an array of notifications
     } catch (error) {
       console.error('Error fetching notifications:', error);
@@ -51,7 +51,7 @@ const Communication = () => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/messages/', newMessage);
+      const response = await axios.post('https://law-track-backend-1.onrender.com/apimessages/', newMessage);
       const sentMessage = response.data;
 
       setNewMessage({ receiver: '', subject: '', content: '' });

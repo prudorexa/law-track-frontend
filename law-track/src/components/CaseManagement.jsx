@@ -7,7 +7,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/"
+  baseURL: "https://law-track-backend-1.onrender.com/api"
 });
 
 const useData = (endpoint) => {
@@ -152,10 +152,10 @@ const CaseManagement = () => {
     setMessage('');
     try {
       if (editCase) {
-        await client.put(`/cases/${editCase.id}/`, form);
+        await client.put(`https://law-track-backend-1.onrender.com/api/cases/${editCase.id}/`, form);
         setMessage('Case updated successfully!');
       } else {
-        await client.post('/cases/', form);
+        await client.post('https://law-track-backend-1.onrender.com/api/cases/', form);
         setMessage('Case created successfully!');
       }
       setEditCase(null);
@@ -172,7 +172,7 @@ const CaseManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      await client.delete(`/cases/${id}/`);
+      await client.delete(`https://law-track-backend-1.onrender.com/api/cases/${id}/`);
       setMessage('Case deleted successfully!');
       reloadCases();
     } catch (error) {
@@ -181,7 +181,7 @@ const CaseManagement = () => {
   };
 
   const handleViewDetails = (id) => {
-    navigate(`/cases/${id}`);
+    navigate(`https://law-track-backend-1.onrender.com/api/cases/${id}`);
   };
 
   return (

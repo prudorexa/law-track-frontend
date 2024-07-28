@@ -19,6 +19,8 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Payment from './components/payment';
 import CaseManagement from './components/CaseManagement';
 import Footer from './components/Footer';
+import { ThemeProvider } from './components/ThemeContext';
+
 
 const App = () => {
   const [userRole, setUserRole] = useState('');
@@ -36,6 +38,7 @@ const App = () => {
   return (
     <Router>
       <Navbar userRole={userRole} setUserRole={setUserRole} />
+      <ThemeProvider>
       <Routes>
         <Route path='/' element={<Login setUserRole={setUserRole} />} />
         <Route path='/dashboard' element={<Dashboard userRole={userRole} />} />
@@ -56,6 +59,8 @@ const App = () => {
         <Route path='/casemanagement' element={<CaseManagement />} />
         <Route path='/communication' element={<Communication />} />
       </Routes>
+      </ThemeProvider>
+     
       <Footer />
     </Router>
   );

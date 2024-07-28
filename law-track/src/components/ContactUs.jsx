@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import lawFirmImage from '../assets/topp jet.jpg'; // Adjust path as needed
+import lawFirmImage from '../assets/topp jet.jpg';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
-    assigned_lawyers_ids: [], // Initialize assigned_lawyers_ids as an empty array
+    assigned_lawyers_ids: [], 
   });
-  const [submitting, setSubmitting] = useState(false); // Track submission status
-  const [submissionError, setSubmissionError] = useState(null); // Track submission errors
-  const [submitted, setSubmitted] = useState(false); // Track submission success
+  const [submitting, setSubmitting] = useState(false); 
+  const [submissionError, setSubmissionError] = useState(null); 
+  const [submitted, setSubmitted] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,18 +25,17 @@ const ContactUs = () => {
     const { value } = e.target;
     setFormData({
       ...formData,
-      assigned_lawyers_ids: value.split(',').map(id => id.trim()), // Convert comma-separated IDs to an array
+      assigned_lawyers_ids: value.split(',').map(id => id.trim()), 
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true); // Start submission process
+    setSubmitting(true); 
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/contact/', formData); // Use formData here
+      const response = await axios.post('https://law-track-backend-1.onrender.com/api/contact/', formData); 
       console.log('Form data submitted:', response.data);
-      // Reset form after successful submission
       setFormData({
         name: '',
         email: '',
@@ -44,7 +43,7 @@ const ContactUs = () => {
         assigned_lawyers_ids: [],
       });
       setSubmissionError(null);
-      setSubmitted(true); // Set submitted to true
+      setSubmitted(true); 
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmissionError('Failed to submit form. Please try again later.');

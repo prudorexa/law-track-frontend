@@ -8,7 +8,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/',
+  baseURL: 'https://law-track-backend-1.onrender.com/api/',
 });
 
 const Login = () => {
@@ -240,7 +240,6 @@ const Login = () => {
                     required
                   >
                     <option value="" disabled>Select Role</option>
-                    <option value="admin">Admin</option>
                     <option value="lawyer">Lawyer</option>
                     <option value="client">Client</option>
                   </select>

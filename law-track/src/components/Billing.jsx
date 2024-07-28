@@ -9,7 +9,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/billings/',
+  baseURL: 'https://law-track-backend-1.onrender.com/apibillings/',
 });
 
 const Billing = ({ onSuccess }) => {
@@ -34,7 +34,7 @@ const Billing = ({ onSuccess }) => {
     setError(null);
 
     try {
-      const response = await client.post('http://127.0.0.1:8000/api/billings/', {
+      const response = await client.post('https://law-track-backend-1.onrender.com/api/billings/', {
         invoice_number: formData.invoiceNumber,
         amount: formData.amount,
         issue_date: formData.issueDate,
