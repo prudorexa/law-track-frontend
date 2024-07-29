@@ -4,7 +4,7 @@ import logo from '../assets/laww firm.png';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-8">
+    <footer className="bg-black text-white py-8">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="footer-section flex flex-col items-start">
           <img src={logo} alt="Law Firm Logo" className="w-25 h-auto mb-3" />

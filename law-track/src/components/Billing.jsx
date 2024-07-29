@@ -9,7 +9,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: 'https://law-track-backend-1.onrender.com/apibillings/',
+  baseURL: 'https://law-track-backend-1.onrender.com/api/billings/',
 });
 
 const Billing = ({ onSuccess }) => {

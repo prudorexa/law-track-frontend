@@ -17,7 +17,7 @@ const Navbar = ({ userRole, setUserRole }) => {
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-black p-4">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
           <img src={logo} alt="Law Firm Logo" className="h-14 w-auto mr-4" />

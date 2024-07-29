@@ -90,7 +90,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center px-4 py-6 sm:px-6 sm:py-8">
+    <div className="min-h-screen flex items-center justify-center px-4 py-6 sm:px-6 sm:py-8">
       <div className="bg-white shadow-lg rounded-lg px-6 pt-6 pb-8 mb-4 w-full max-w-md sm:px-8 sm:pt-8 sm:pb-10">
         <div className="text-2xl font-bold mb-4 text-center text-gray-800 sm:text-3xl">{action}</div>
         <div className="mb-6">
