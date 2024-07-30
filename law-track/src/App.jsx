@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
 import Login from "./components/LoginForm";
-import MessageNotification from "./components/MessageNotification";
+// import MessageNotification from "./components/MessageNotification";
 import Services from "./components/Services";
 import ContactUs from './components/ContactUs';
 import Dashboard from './components/Dashboard';
@@ -12,7 +12,7 @@ import Cases from "./components/Cases";
 import Support from "./components/Support";
 import TermsCondition from "./components/TermsCondition";
 import Schedule from './components/Schedule'; 
-import Communication from './components/Communication';
+// import Communication from './components/Communication';
 import Documents from './components/Documents';
 import Billing from './components/Billing';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -49,7 +49,7 @@ const App = () => {
         <Route path='/contact' element={<ContactUs />} />
         <Route path='/login' element={<Login setUserRole={setUserRole} />} />
         <Route path='/cases' element={<Cases />} />
-        <Route path='/message' element={<MessageNotification />} />
+        {/* <Route path='/message' element={<MessageNotification />} /> */}
         <Route path='/schedule' element={<Schedule />} />
         <Route path='/documents' element={<Documents />} />
         <Route path='/billing' element={<Billing />} />
@@ -57,7 +57,7 @@ const App = () => {
         <Route path='/support' element={<Support />} />
         <Route path='/terms-condition' element={<TermsCondition />} />
         <Route path='/casemanagement' element={<CaseManagement />} />
-        <Route path='/communication' element={<Communication />} />
+        {/* <Route path='/communication' element={<Communication />} /> */}
       </Routes>
       </ThemeProvider>
      

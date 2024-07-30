@@ -77,11 +77,11 @@ const Navbar = ({ userRole, setUserRole }) => {
                     Schedule
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/communication" className="text-white hover:text-gray-300" onClick={handleLinkClick}>
                     Communication
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/cases" className="text-white hover:text-gray-300" onClick={handleLinkClick}>
                     Cases

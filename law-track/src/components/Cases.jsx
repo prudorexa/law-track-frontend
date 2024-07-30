@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import BASE_URL from '../../config';
 
 const Cases = () => {
   const [cases, setCases] = useState([]);
@@ -8,7 +9,7 @@ const Cases = () => {
 
   const fetchCases = async () => {
     try {
-      const response = await axios.get('https://law-track-backend-1.onrender.com/api/cases/');
+      const response = await axios.get(`${BASE_URL}/api/cases/`);
       setCases(response.data);
       setLoading(false);
     } catch (error) {
@@ -47,9 +48,9 @@ const Cases = () => {
           >
             <p className="font-bold text-xl text-gray-800 mb-2">Case Number: {caseItem.case_number}</p>
             <p className="font-bold text-lg text-gray-700 mb-2">Case Name: {caseItem.case_name}</p>
-            <p className="text-gray-600 mb-4">
+            {/* <p className="text-gray-600 mb-4">
               {expandedCases[caseItem.id] ? caseItem.case_description : `${caseItem.case_description.slice(0, 100)}...`}
-            </p>
+            </p> */}
             <button
               onClick={() => toggleReadMore(caseItem.id)}
               className="text-blue-500 hover:underline mb-4"
@@ -57,7 +58,7 @@ const Cases = () => {
               {expandedCases[caseItem.id] ? 'Read Less' : 'Read More'}
             </button>
             <p className="font-semibold text-gray-700">Assigned Lawyer ID: {caseItem.assigned_lawyer}</p>
-            <p className="font-semibold text-gray-700">Clients: {caseItem.clients.join(', ')}</p>
+            {/* <p className="font-semibold text-gray-700">Clients: {caseItem.clients.join(', ')}</p> */}
             <p className="font-semibold text-gray-700">Created At: {new Date(caseItem.created_at).toLocaleDateString()}</p>
             <p className="font-semibold text-gray-700">Updated At: {new Date(caseItem.updated_at).toLocaleDateString()}</p>
           </div>

@@ -7,7 +7,7 @@ const Documents = () => {
 
   const fetchDocuments = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/documents/');
+      const response = await axios.get(`${BASE_URL}/api/documents/`);
       setDocuments(response.data);
       setLoading(false);
     } catch (error) {

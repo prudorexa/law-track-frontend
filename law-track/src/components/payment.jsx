@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import BASE_URL from '../../config';
+
 // import mpesaLogo from 'law-track/src/assets/mpesa.png'; // Adjust the path as needed
 
 const Payment = () => {
@@ -22,7 +24,7 @@ const Payment = () => {
     console.log('Sending payment data:', paymentData);
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/mpesa/api/stk_push/', paymentData);
+      const response = await axios.post(`${BASE_URL}/mpesa/api/stk_push/`, paymentData);
       console.log('Response from backend:', response.data);
       setResponseMessage(response.data.customer_message);
     } catch (error) {

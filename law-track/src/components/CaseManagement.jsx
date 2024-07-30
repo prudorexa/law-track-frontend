@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
+
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: "https://law-track-backend-1.onrender.com/api"
+  baseURL: BASE_URL
 });
 
 const useData = (endpoint) => {
@@ -140,8 +142,8 @@ const CaseList = ({ cases, onEdit, onDelete, onViewDetails }) => {
 };
 
 const CaseManagement = () => {
-  const { data: cases, reload: reloadCases } = useData('/cases/');
-  const { data: lawyers } = useData('/lawyers/');
+  const { data: cases, reload: reloadCases } = useData(`${BASE_URL}/api/cases/`);
+  const { data: lawyers } = useData(`${BASE_URL}/api/lawyers/`);
   const [editCase, setEditCase] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -152,10 +154,10 @@ const CaseManagement = () => {
     setMessage('');
     try {
       if (editCase) {
-        await client.put(`https://law-track-backend-1.onrender.com/api/cases/${editCase.id}/`, form);
+        await client.put(`${BASE_URL}/api/cases/${editCase.id}/`, form);
         setMessage('Case updated successfully!');
       } else {
-        await client.post('https://law-track-backend-1.onrender.com/api/cases/', form);
+        await client.post(`${BASE_URL}/api/cases/`, form);
         setMessage('Case created successfully!');
       }
       setEditCase(null);
@@ -172,7 +174,7 @@ const CaseManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      await client.delete(`https://law-track-backend-1.onrender.com/api/cases/${id}/`);
+      await client.delete(`${BASE_URL}/api/cases/${id}/`);
       setMessage('Case deleted successfully!');
       reloadCases();
     } catch (error) {
@@ -181,7 +183,7 @@ const CaseManagement = () => {
   };
 
   const handleViewDetails = (id) => {
-    navigate(`https://law-track-backend-1.onrender.com/api/cases/${id}`);
+    navigate(`${BASE_URL}/api/cases/${id}`);
   };
 
   return (

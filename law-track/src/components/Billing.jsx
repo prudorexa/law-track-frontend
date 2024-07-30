@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Paper, Typography, TextField, Button, Grid, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import axios from 'axios';
 import lawFirmImage from '../assets/laww.webp';
+import BASE_URL from '../../config';
 
 // Configure Axios instance for API requests
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -9,7 +10,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: 'https://law-track-backend-1.onrender.com',
+  baseURL: BASE_URL
 });
 
 const Billing = ({ onSuccess }) => {
@@ -37,7 +38,7 @@ const Billing = ({ onSuccess }) => {
 
     const fetchCases = async () => {
       try {
-        const response = await axios.get('https://law-track-backend-1.onrender.com/api/cases/');
+        const response = await axios.get(`${BASE_URL}/api/cases/`);
         setCases(response.data);
       } catch (error) {
         console.error('Error fetching cases:', error);
@@ -61,7 +62,7 @@ const Billing = ({ onSuccess }) => {
     setError(null);
 
     try {
-      const response = await client.post('/', {
+      const response = await client.post(`${BASE_URL}/api/billings/`, {
         invoice_number: formData.invoiceNumber,
         amount: formData.amount,
         issue_date: formData.issueDate,
@@ -70,8 +71,6 @@ const Billing = ({ onSuccess }) => {
       });
       if (onSuccess) onSuccess(response.data); 
       console.log('Billing submitted:', response.data);
-
-      window.location.href = '/dashboard'; 
     } catch (error) {
       console.error('Error submitting billing:', error);
       if (error.response) {

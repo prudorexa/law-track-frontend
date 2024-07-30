@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
+
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -10,7 +12,7 @@ const Services = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('https://law-track-backend-1.onrender.com/api/services/');
+      const response = await axios.get(`${BASE_URL}/api/services/`);
       console.log('Services data:', response.data); 
       setServices(response.data);
       setLoading(false);

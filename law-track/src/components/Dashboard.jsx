@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import BASE_URL from '../../config';
 
 // Fetch data function using Axios
 const fetchData = async (url, setData) => {
@@ -61,7 +62,7 @@ const AdminDashboard = ({
   users,
   cases,
   // documents,
-  messages,
+  // messages,
   schedules,
   contacts,
   billings,
@@ -71,7 +72,7 @@ const AdminDashboard = ({
       <UserList users={users} />
       <Section title="Manage Cases" data={cases} columns={['ID', 'Title', 'Assigned Lawyer', 'Status']} />
       {/* <Section title="Manage Documents" data={documents} columns={['ID', 'Name', 'Uploaded At', 'Case ID']} /> */}
-      <Section title="Client Messages" data={messages} columns={['ID', 'Content', 'Client ID']} />
+      {/* <Section title="Client Messages" data={messages} columns={['ID', 'Content', 'Client ID']} /> */}
       <Section title="Manage Schedule" data={schedules} columns={['ID', 'Event', 'Date']} />
       <Section title="Manage Contacts" data={contacts} columns={['ID', 'Name', 'Email', 'Message']} />
       <Section title="Manage Billings" data={billings} columns={['Invoice Number', 'Amount', 'Issue Date', 'Due Date']} />
@@ -109,8 +110,9 @@ const ClientDashboard = ({ profile }) => {
 
 // Navbar Component
 const Navbar = ({ items, activeItem, onSelectItem }) => (
-  <nav className="bg-gray-800 text-white h-full p-4">
+  <nav className="bg-black text-white h-full p-4">
     <ul className="space-y-2">
+      <li className="p-2 font-bold">Admin Dashboard</li>
       {items.map((item) => (
         <li
           key={item}
@@ -131,41 +133,35 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [cases, setCases] = useState([]);
   // const [documents, setDocuments] = useState([]);
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [billings, setBillings] = useState([]);
   const [profile, setProfile] = useState({});
 
-  const adminSections = ['Users', 'Cases', 'Messages', 'Schedule', 'Contacts', 'Billings'];
-  const lawyerSections = ['Assigned Cases', 'Schedule', 'Messages'];
+  const adminSections = ['Users', 'Cases', 'Schedule', 'Contacts', 'Billings'];
+  const lawyerSections = ['Assigned Cases', 'Schedule'];
 
   useEffect(() => {
-    // Fetch the user role from your backend or authentication service
-    // For demonstration, we'll use a hardcoded value
-    setUserRole('admin'); // Replace with actual role fetching logic
+    setUserRole('admin'); 
 
-    // Fetch data for admin
     if (userRole === 'admin') {
-      fetchData('https://law-track-backend-1.onrender.com/api/api/users/', setUsers);
-      fetchData('https://law-track-backend-1.onrender.com/api/cases/', setCases);
-      // fetchData('http://127.0.0.1:8000/api/documents/', setDocuments);
-      fetchData('https://law-track-backend-1.onrender.com/api/messages/', setMessages);
-      fetchData('https://law-track-backend-1.onrender.com/api/schedule/', setSchedules);
-      fetchData('https://law-track-backend-1.onrender.com/api/contact/', setContacts);
-      fetchData('https://law-track-backend-1.onrender.com/api/billings/', setBillings);
+      fetchData(`${BASE_URL}/api/api/users/`, setUsers);
+      fetchData(`${BASE_URL}/api/cases/`, setCases);
+      fetchData(`${BASE_URL}/api/schedules/`, setSchedules);
+      fetchData(`${BASE_URL}/api/contact/`, setContacts);
+      fetchData(`${BASE_URL}/api/billings/`, setBillings);
     }
 
     // Fetch data for lawyer
     if (userRole === 'lawyer') {
       fetchData('http://127.0.0.1:8000/api/assigned_cases/', setCases);
-      fetchData('https://law-track-backend-1.onrender.com/apischedule/', setSchedules);
-      fetchData('https://law-track-backend-1.onrender.com/apimessages/', setMessages);
+      fetchData(`${BASE_URL}/api/schedules/`, setSchedules);
     }
 
     // Fetch data for client
     if (userRole === 'client') {
-      fetchData('https://law-track-backend-1.onrender.com/apiprofile/', setProfile);
+      fetchData(`${BASE_URL}/api/profile/`, setProfile);
     }
   }, [userRole]);
 
@@ -178,14 +174,14 @@ const Dashboard = () => {
           return <Section title="Manage Cases" data={cases} columns={['ID', 'Title', 'Assigned Lawyer', 'Status']} />;
         // case 'Documents':
         //   return <Section title="Manage Documents" data={documents} columns={['ID', 'Name', 'Uploaded At', 'Case ID']} />;
-        case 'Messages':
-          return <Section title="Client Messages" data={messages} columns={['ID', 'Content', 'Client ID']} />;
+        // case 'Messages':
+        //   return <Section title="Client Messages" data={messages} columns={['ID', 'Content', 'Client ID']} />;
         case 'Schedule':
-          return <Section title="Manage Schedule" data={schedules} columns={['ID', 'Event', 'Date']} />;
+          return <Section title="Manage Schedule" data={schedules} columns={['ID', 'Event', 'Date', 'Description', 'Assigned_lawyer', 'case']} />;
         case 'Contacts':
           return <Section title="Manage Contacts" data={contacts} columns={['ID', 'Name', 'Email', 'Message']} />;
         case 'Billings':
-          return <Section title="Manage Billings" data={billings} columns={['Invoice Number', 'Amount', 'Issue Date', 'Due Date']} />;
+          return <Section title="Manage Billings" data={billings} columns={['Invoice Number', 'Amount', 'Issue Date', 'Due Date', 'Case']} />;
         default:
           return null;
       }
@@ -194,9 +190,9 @@ const Dashboard = () => {
         case 'Assigned Cases':
           return <Section title="Assigned Cases" data={cases} columns={['ID', 'Title', 'Status']} />;
         case 'Schedule':
-          return <Section title="Manage Schedule" data={schedules} columns={['Event', 'Date', 'Time']} />;
-        case 'Messages':
-          return <Section title="Communicate with Clients" data={messages} columns={['ID', 'Content', 'Client ID']} />;
+          return <Section title="Manage Schedule" data={schedules} columns={['Event', 'Date', 'Time', 'Description', 'Assigned_lawyer', 'case']} />;
+        // case 'Messages':
+        //   return <Section title="Communicate with Clients" data={messages} columns={['ID', 'Content', 'Client ID']} />;
         default:
           return null;
       }
