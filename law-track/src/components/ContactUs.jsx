@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import lawFirmImage from '../assets/topp jet.jpg';
+import BASE_URL from '../../config';
+
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
-    assigned_lawyers_ids: [], 
+    assigned_lawyers_ids: [],
   });
-  const [submitting, setSubmitting] = useState(false); 
-  const [submissionError, setSubmissionError] = useState(null); 
-  const [submitted, setSubmitted] = useState(false); 
+  const [submitting, setSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,16 +27,16 @@ const ContactUs = () => {
     const { value } = e.target;
     setFormData({
       ...formData,
-      assigned_lawyers_ids: value.split(',').map(id => id.trim()), 
+      assigned_lawyers_ids: value.split(',').map((id) => id.trim()),
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true); 
+    setSubmitting(true);
 
     try {
-      const response = await axios.post('https://law-track-backend-1.onrender.com/api/contact/', formData); 
+      const response = await axios.post(`${BASE_URL}/api/contact/`, formData);
       console.log('Form data submitted:', response.data);
       setFormData({
         name: '',
@@ -43,7 +45,7 @@ const ContactUs = () => {
         assigned_lawyers_ids: [],
       });
       setSubmissionError(null);
-      setSubmitted(true); 
+      setSubmitted(true);
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmissionError('Failed to submit form. Please try again later.');

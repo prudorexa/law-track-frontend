@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config';
 
 // Configure Axios instance for API requests
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -8,7 +9,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: 'https://law-track-backend-1.onrender.com/api/',
+  baseURL: BASE_URL
 });
 
 const Login = () => {
@@ -47,7 +48,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await client.post('/api/login/', { email, password });
+      const response = await client.post(`${BASE_URL}/api/api/login/`, { email, password });
       if (response.status === 200) {
         setMessage('Login successful!');
         navigate('/Home'); // Navigate to desired page after successful login
@@ -62,7 +63,7 @@ const Login = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await client.post('/api/users/', { username: name, email, password, role });
+      const response = await client.post(`${BASE_URL}/api/api/users/`, { username: name, email, password, role });
       if (response.status === 201) {
         setMessage('Registration successful!');
         setAction('Login'); // Automatically switch to login after successful signup
@@ -77,7 +78,7 @@ const Login = () => {
 
   const handlePasswordReset = async () => {
     try {
-      const response = await client.post('/api/reset-password/', { email: resetEmail, newPassword, confirmPassword });
+      const response = await client.post(`${BASE_URL}/api/reset-password/`, { email: resetEmail, newPassword, confirmPassword });
       if (response.status === 200) {
         setMessage('Password reset request successful!');
       } else {

@@ -8,7 +8,7 @@ const Cases = () => {
 
   const fetchCases = async () => {
     try {
-      const response = await axios.get('https://law-track-backend-1.onrender.com/apicases/');
+      const response = await axios.get('https://law-track-backend-1.onrender.com/api/cases/');
       setCases(response.data);
       setLoading(false);
     } catch (error) {

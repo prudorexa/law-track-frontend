@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Paper, Typography, TextField, Button, Grid } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Container, Paper, Typography, TextField, Button, Grid, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import axios from 'axios';
 import lawFirmImage from '../assets/laww.webp';
 
@@ -9,7 +9,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: 'https://law-track-backend-1.onrender.com/api/billings/',
+  baseURL: 'https://law-track-backend-1.onrender.com',
 });
 
 const Billing = ({ onSuccess }) => {
@@ -18,8 +18,35 @@ const Billing = ({ onSuccess }) => {
     amount: '',
     issueDate: '',
     dueDate: '',
+    caseId: '',
   });
+  const [cases, setCases] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const generateInvoiceNumber = () => {
+      return `INV-${Math.floor(Math.random() * 1000000)}`;
+    };
+
+    setFormData({
+      invoiceNumber: generateInvoiceNumber(),
+      amount: '',
+      issueDate: new Date().toISOString().split('T')[0], 
+      caseId: '',
+    });
+
+    const fetchCases = async () => {
+      try {
+        const response = await axios.get('https://law-track-backend-1.onrender.com/api/cases/');
+        setCases(response.data);
+      } catch (error) {
+        console.error('Error fetching cases:', error);
+        setError('Failed to fetch cases. Please try again.');
+      }
+    };
+
+    fetchCases();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,15 +61,17 @@ const Billing = ({ onSuccess }) => {
     setError(null);
 
     try {
-      const response = await client.post('https://law-track-backend-1.onrender.com/api/billings/', {
+      const response = await client.post('/', {
         invoice_number: formData.invoiceNumber,
         amount: formData.amount,
         issue_date: formData.issueDate,
         due_date: formData.dueDate,
-        case: 1, // Replace with the actual case ID you want to associate with
+        case: formData.caseId, 
       });
-      if (onSuccess) onSuccess(response.data); // Pass the new billing data to onSuccess
+      if (onSuccess) onSuccess(response.data); 
       console.log('Billing submitted:', response.data);
+
+      window.location.href = '/dashboard'; 
     } catch (error) {
       console.error('Error submitting billing:', error);
       if (error.response) {
@@ -72,6 +101,9 @@ const Billing = ({ onSuccess }) => {
                 value={formData.invoiceNumber}
                 onChange={handleChange}
                 sx={{ marginBottom: 2 }}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
               <TextField
                 fullWidth
@@ -95,6 +127,9 @@ const Billing = ({ onSuccess }) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
               <TextField
                 fullWidth
@@ -109,6 +144,23 @@ const Billing = ({ onSuccess }) => {
                   shrink: true,
                 }}
               />
+              <FormControl fullWidth required sx={{ marginBottom: 2 }}>
+                <InputLabel id="case-select-label">Select Case</InputLabel>
+                <Select
+                  labelId="case-select-label"
+                  id="case-select"
+                  name="caseId"
+                  value={formData.caseId}
+                  onChange={handleChange}
+                  label="Select Case"
+                >
+                  {cases.map((caseItem) => (
+                    <MenuItem key={caseItem.id} value={caseItem.id}>
+                      {caseItem.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               {error && (
                 <Typography variant="body2" color="error" sx={{ marginBottom: 2 }}>
                   {error}

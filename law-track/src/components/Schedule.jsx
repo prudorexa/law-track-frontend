@@ -20,7 +20,7 @@ const Schedule = () => {
 
     const fetchSchedules = async () => {
         try {
-            const response = await axios.get("https://law-track-backend-1.onrender.com/apischedules/");
+            const response = await axios.get("https://law-track-backend-1.onrender.com/api/schedules/");
             console.log("Fetched schedules:", response.data);
             if (Array.isArray(response.data)) {
                 setSchedules(response.data);
@@ -34,7 +34,7 @@ const Schedule = () => {
 
     const fetchLawyers = async () => {
         try {
-            const response = await axios.get("https://law-track-backend-1.onrender.com/apilawyers/");
+            const response = await axios.get("https://law-track-backend-1.onrender.com/api/lawyers/");
             setLawyers(response.data);
         } catch (error) {
             console.error("Error fetching lawyers:", error);
@@ -43,7 +43,7 @@ const Schedule = () => {
 
     const fetchCases = async () => {
         try {
-            const response = await axios.get("https://law-track-backend-1.onrender.com/apicases/");
+            const response = await axios.get("https://law-track-backend-1.onrender.com/api/cases/");
             setCases(response.data);
         } catch (error) {
             console.error("Error fetching cases:", error);
@@ -61,9 +61,9 @@ const Schedule = () => {
 
         try {
             if (editingScheduleId) {
-                await axios.put(`https://law-track-backend-1.onrender.com/apischedules/${editingScheduleId}/`, scheduleData);
+                await axios.put(`https://law-track-backend-1.onrender.com/api/schedules/${editingScheduleId}/`, scheduleData);
             } else {
-                await axios.post("https://law-track-backend-1.onrender.com/apischedules/", scheduleData);
+                await axios.post("https://law-track-backend-1.onrender.com/api/schedules/", scheduleData);
             }
             fetchSchedules();
             resetForm();
@@ -83,7 +83,7 @@ const Schedule = () => {
 
     const handleDelete = async (scheduleId) => {
         try {
-            await axios.delete(`https://law-track-backend-1.onrender.com/apischedules/${scheduleId}/`);
+            await axios.delete(`https://law-track-backend-1.onrender.com/api/schedules/${scheduleId}/`);
             fetchSchedules();
         } catch (error) {
             console.error("Error deleting schedule:", error);

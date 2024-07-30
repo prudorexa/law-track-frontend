@@ -82,11 +82,11 @@ const Navbar = ({ userRole, setUserRole }) => {
                     Communication
                   </Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link to="/cases" className="text-white hover:text-gray-300" onClick={handleLinkClick}>
                     Cases
                   </Link>
-                </li> */}
+                </li>
                 <li>
                   <Link to="/casemanagement" className="text-white hover:text-gray-300" onClick={handleLinkClick}>
                     Case Management
