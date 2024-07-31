@@ -12,7 +12,7 @@ const client = axios.create({
   baseURL: BASE_URL,
 });
 
-const Login = () => {
+const AdminLogin = () => {
   const [action, setAction] = useState('Login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +20,6 @@ const Login = () => {
   const [resetEmail, setResetEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -51,7 +50,7 @@ const Login = () => {
       const response = await client.post(`${BASE_URL}/api/api/login/`, { email, password });
       if (response.status === 200) {
         setMessage('Login successful!');
-        navigate('/Dashboard'); // Navigate to desired page after successful login
+        navigate('/admin-dashboard'); // Navigate to desired page after successful login
       } else {
         setMessage('Login failed. Please check your credentials.');
       }
@@ -63,7 +62,7 @@ const Login = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await client.post(`${BASE_URL}/api/api/users/`, { username: name, email, password, role });
+      const response = await client.post(`${BASE_URL}/api/api.users`, { username: name, email, password });
       if (response.status === 201) {
         setMessage('Registration successful!');
         setAction('Login'); // Automatically switch to login after successful signup
@@ -78,7 +77,7 @@ const Login = () => {
 
   const handlePasswordReset = async () => {
     try {
-      const response = await client.post(`${BASE_URL}/api/reset-password/`, { email: resetEmail, newPassword, confirmPassword });
+      const response = await client.post(`${BASE_URL}/api/api/reset-password/`, { email: resetEmail, newPassword, confirmPassword });
       if (response.status === 200) {
         setMessage('Password reset request successful!');
       } else {
@@ -229,22 +228,6 @@ const Login = () => {
                     required
                   />
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-                    Role
-                  </label>
-                  <select
-                    id="role"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    className="input-field focus:ring-blue-500 focus:border-blue-500 w-full"
-                    required
-                  >
-                    <option value="" disabled>Select Role</option>
-                    <option value="lawyer">Lawyer</option>
-                    <option value="client">Client</option>
-                  </select>
-                </div>
               </>
             )}
             <div className="flex items-center justify-center">
@@ -265,30 +248,26 @@ const Login = () => {
           >
             {action === 'Forgot Password' ? 'Back to Login' : 'Forgot Password?'}
           </button>
-        </div>
-        {action === 'Login' && (
-          <div className="flex items-center justify-center mt-4">
+          {action === 'Login' && (
             <button
-              className="text-blue-500 hover:underline"
+              className="text-blue-500 hover:underline ml-4"
               onClick={() => setAction('Sign Up')}
             >
-              Don't have an account? Sign Up
+              Sign Up
             </button>
-          </div>
-        )}
-        {action === 'Sign Up' && (
-          <div className="flex items-center justify-center mt-4">
+          )}
+          {action === 'Sign Up' && (
             <button
-              className="text-blue-500 hover:underline"
+              className="text-blue-500 hover:underline ml-4"
               onClick={() => setAction('Login')}
             >
-              Already have an account? Login
+              Back to Login
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default AdminLogin;

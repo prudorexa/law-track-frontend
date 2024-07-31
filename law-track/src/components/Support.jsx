@@ -123,10 +123,10 @@ const Support = () => {
           If you need immediate assistance, please contact our support team directly:
         </p>
         <p className="text-gray-600 mt-2">
-          <strong>Email:</strong> support@yourlawfirm.com
+          <strong>Email:</strong> support@law firm.com
         </p>
         <p className="text-gray-600">
-          <strong>Phone:</strong> +1-800-123-4567
+          <strong>Phone:</strong> +254-7 23831464
         </p>
         <p className="text-gray-600">
           <strong>Address:</strong> 123 Legal St., Suite 100, Lawtown, LT 12345

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BASE_URL from '../../config';
 
-
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
@@ -123,9 +122,9 @@ const CaseForm = ({ onSubmit, editCase, lawyers, loading }) => {
 
 const CaseList = ({ cases, onEdit, onDelete, onViewDetails }) => {
   return (
-    <ul className="space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {cases.map(caseItem => (
-        <li key={caseItem.id} className="p-4 border border-gray-300 bg-white rounded-md shadow-sm">
+        <div key={caseItem.id} className="p-4 border border-gray-300 bg-white rounded-md shadow-sm">
           <h2 className="text-xl font-semibold text-gray-800 mb-2">{caseItem.title}</h2>
           <p className="text-gray-700 mb-2">{caseItem.description}</p>
           <p className="text-gray-600 mb-2">Status: {caseItem.status}</p>
@@ -135,9 +134,9 @@ const CaseList = ({ cases, onEdit, onDelete, onViewDetails }) => {
             <button onClick={() => onDelete(caseItem.id)} className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Delete</button>
             <button onClick={() => onViewDetails(caseItem.id)} className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">View Details</button>
           </div>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 
@@ -190,8 +189,21 @@ const CaseManagement = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Case Management</h1>
       {message && <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 p-4 rounded-md mb-4">{message}</div>}
-      <CaseForm onSubmit={handleFormSubmit} editCase={editCase} lawyers={lawyers} loading={loading} />
-      <CaseList cases={cases} onEdit={handleEdit} onDelete={handleDelete} onViewDetails={handleViewDetails} />
+      
+      {/* Button to toggle the form */}
+      <button
+        onClick={() => setEditCase(null)}
+        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+      >
+        Create New Case
+      </button>
+      
+      {/* Conditionally render the form or case list */}
+      {editCase === null ? (
+        <CaseList cases={cases} onEdit={handleEdit} onDelete={handleDelete} onViewDetails={handleViewDetails} />
+      ) : (
+        <CaseForm onSubmit={handleFormSubmit} editCase={editCase} lawyers={lawyers} loading={loading} />
+      )}
     </div>
   );
 };

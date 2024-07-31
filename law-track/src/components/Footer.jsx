@@ -33,8 +33,14 @@ export default function Footer() {
         <div className="footer-section">
           <h6 className="text-xl font-bold mb-4">Contact</h6>
           <p className="flex items-center"><i className="fa fa-map-marker-alt mr-3"></i>Nairobi, Kenya</p>
-          <p className="flex items-center"><i className="fa fa-phone-alt mr-3"></i>+254 723 831 464</p>
-          <p className="flex items-center"><i className="fa fa-envelope mr-3"></i>mathuprudence24@gmail.com</p>
+          <p className="flex items-center">
+            <i className="fa fa-phone-alt mr-3"></i>
+            <a href="tel:+254723831464" className="text-gray-400 hover:text-white">+254 723 831 464</a>
+          </p>
+          <p className="flex items-center">
+            <i className="fa fa-envelope mr-3"></i>
+            <a href="mailto:mathuprudence24@gmail.com" className="text-gray-400 hover:text-white">mathuprudence24@gmail.com</a>
+          </p>
         </div>
       </div>
     </footer>

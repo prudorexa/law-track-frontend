@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
 import Login from "./components/LoginForm";
+import AdminLogin from "./components/AdminLogin";
 // import MessageNotification from "./components/MessageNotification";
 import Services from "./components/Services";
 import ContactUs from './components/ContactUs';
@@ -48,6 +49,7 @@ const App = () => {
         <Route path='/services' element={<Services />} />
         <Route path='/contact' element={<ContactUs />} />
         <Route path='/login' element={<Login setUserRole={setUserRole} />} />
+        <Route path='/admin-login' element={<AdminLogin setUserRole={setUserRole} />} />
         <Route path='/cases' element={<Cases />} />
         {/* <Route path='/message' element={<MessageNotification />} /> */}
         <Route path='/schedule' element={<Schedule />} />

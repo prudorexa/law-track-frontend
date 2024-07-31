@@ -61,7 +61,7 @@ const Navbar = ({ userRole, setUserRole }) => {
               Documents
             </button>
             {dropdown === 'documents' && (
-              <ul className="text-sm absolute bg-gray-800 p-2 mt-2 space-y-2">
+              <ul className="text-sm absolute bg-black p-2 mt-2 space-y-2">
                 <li>
                   <Link to="/documents" className="text-white hover:text-gray-300" onClick={handleLinkClick}>
                     Documents
@@ -95,10 +95,27 @@ const Navbar = ({ userRole, setUserRole }) => {
               </ul>
             )}
           </li>
-          <li>
-            <Link to="/login" className="text-white hover:text-gray-300" onClick={handleLinkClick}>
+          <li className="relative">
+            <button
+              className="text-white hover:text-gray-300"
+              onClick={() => handleDropdown('login')}
+            >
               Login
-            </Link>
+            </button>
+            {dropdown === 'login' && (
+              <ul className="text-sm absolute bg-black p-2 mt-2 space-y-2">
+                <li>
+                  <Link to="/login" className="text-white hover:text-gray-300" onClick={handleLinkClick}>
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin-login" className="text-white hover:text-gray-300" onClick={handleLinkClick}>
+                    Admin Login
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
         </ul>
       </div>
