@@ -85,15 +85,6 @@ const Schedule = () => {
     setShowForm(true);
   };
 
-  const handleDelete = async (scheduleId) => {
-    try {
-      await axios.delete(`${BASE_URL}/api/schedules/${scheduleId}/`);
-      fetchSchedules();
-    } catch (error) {
-      console.error("Error deleting schedule:", error);
-    }
-  };
-
   const resetForm = () => {
     setTitle("");
     setDate("");
@@ -123,12 +114,6 @@ const Schedule = () => {
                 className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
               >
                 Edit
-              </button>
-              <button
-                onClick={() => handleDelete(schedule.id)}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-              >
-                Delete
               </button>
             </div>
           </div>
@@ -201,7 +186,7 @@ const Schedule = () => {
             </select>
           </div>
           <div>
-            <label className="block text-gray-700">Case:</label>
+            <label className="block text-black">Case:</label>
             <select
               value={caseId}
               onChange={(e) => setCaseId(e.target.value)}
